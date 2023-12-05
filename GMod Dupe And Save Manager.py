@@ -9,6 +9,7 @@ import tkinter.filedialog
 import shutil
 from send2trash import send2trash
 from PyVDF import PyVDF
+import webbrowser
 class game():
     def __init__(self, name, path, exepath=None, isunity=False, isunrealengine=False):
         self.name = name
@@ -343,6 +344,7 @@ for i in modes:
     mode_menu.add_radiobutton(label=i, value=count, variable=mode_var, command=refresh_mode)
     count += 1
 menu.add_command(label="Please make sure that steam cloud is disabled for GMod!")
+menu.add_command(label="Open Github Repository", command=lambda: webbrowser.open("https://github.com/Bknibb-alt/GMod-Dupe-And-Save-Manager"))
 root.config(menu=menu)
 frame.interior.bind("<Configure>", reconfig_interior)
 root.protocol("WM_DELETE_WINDOW", lambda: os.kill(os.getpid(), signal.SIGTERM))
