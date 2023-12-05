@@ -36,11 +36,11 @@ jobs:
           pip install PyInstaller
       - name: Run PyInstaller
         run: |
-          python -m PyInstaller "GMod Dupe Manager.spec"
+          python -m PyInstaller "GMod Dupe And Save Manager.spec"
       - uses: actions/upload-artifact@v2
         with:
           name: Windows_qwiklabs
-          path: dist/GMod Dupe Manager.exe
+          path: dist/GMod Dupe And Save Manager.exe
 
       - name: create release
         id: create_release
@@ -60,6 +60,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.create_release.outputs.upload_url}}
-          asset_path: dist/GMod Dupe Manager.exe
-          asset_name: GMod-Dupe-Manager-Windows-amd64.exe
+          asset_path: dist/GMod Dupe And Save Manager.exe
+          asset_name: GMod-Dupe-And-Save-Manager-Windows-amd64.exe
           asset_content_type: application/zip
