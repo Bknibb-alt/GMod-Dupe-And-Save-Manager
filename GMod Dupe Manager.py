@@ -24,7 +24,7 @@ def find_game(name):
 def get_games():
     libraryfolders_vdf = PyVDF(infile=os.path.join(os.environ["ProgramFiles(X86)"], "steam/steamapps", "libraryfolders.vdf"))
     libraryfolders = libraryfolders_vdf.getData()
-    print("If You Have Installed A Game And Have Not Restarted Steam Since, Then The Game Will Not Show Up Until Steam Is Restarted!")
+    #print("If You Have Installed A Game And Have Not Restarted Steam Since, Then The Game Will Not Show Up Until Steam Is Restarted!")
     paths = []
     appids = {}
     for i in libraryfolders["libraryfolders"]:
@@ -155,7 +155,9 @@ class dupe(ttk.Frame):
         self.image_label.grid(row=1, column=0, sticky="nesw")
         self.columnconfigure(0, weight=1)
         self.renaming = False
-        self.bind_all("<Button-3>", self.right_click)
+        self.bind("<Button-3>", self.right_click)
+        for i in self.winfo_children():
+            i.bind("<Button-3>", self.right_click)
     def right_click(self, event):
         global selected
         selected = self
@@ -181,6 +183,8 @@ class dupe(ttk.Frame):
         os.rename(os.path.join(dupes_path, self.name+".jpg"), os.path.join(dupes_path, name+".jpg"))
         self.renaming = False
         refresh()
+    def cancel_rename(self):
+        self.renaming = False
     def duplicate(self):
         name = self.name
         count = 1
@@ -215,8 +219,12 @@ class renamer(tk.Tk):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
+        self.protocol("WM_DELETE_WINDOW", self.cancel)
     def finish(self):
         self.dupe.do_rename(self.name_var.get())
+        self.destroy()
+    def cancel(self):
+        self.dupe.cancel_rename()
         self.destroy()
 width = 5
 last_width = width
