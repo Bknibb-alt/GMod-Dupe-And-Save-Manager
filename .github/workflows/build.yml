@@ -18,7 +18,9 @@ jobs:
           $COMMIT_TITLE = $MESSAGE_LINES[0]
           $COMMIT_DESCRIPTION = $MESSAGE_LINES[1..($MESSAGE_LINES.Length - 1)] -join "`n"
           echo "COMMIT_TITLE=$COMMIT_TITLE" >> $env:GITHUB_ENV
-          echo "COMMIT_DESCRIPTION='$COMMIT_DESCRIPTION'" >> $env:GITHUB_ENV
+          echo "COMMIT_DESCRIPTION<<EOF" >> $env:GITHUB_ENV
+          echo "$COMMIT_DESCRIPTION" >> $env:GITHUB_ENV
+          echo EOF >> $env:GITHUB_ENV
           echo "Commit Title: $COMMIT_TITLE"
           echo "Commit Description: $COMMIT_DESCRIPTION"
       - name: Install Python
