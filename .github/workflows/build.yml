@@ -10,6 +10,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: Extract commit info
+        run: |
+          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%B")
+          IFS=$'\n' read -r -a MESSAGE_LINES <<< "$COMMIT_MESSAGE"
+          COMMIT_TITLE=${MESSAGE_LINES[0]}
+          COMMIT_DESCRIPTION="${MESSAGE_LINES[@]:1}"
+          echo "Commit Title: $COMMIT_TITLE"
+          echo "Commit Description: $COMMIT_DESCRIPTION"
       - name: Install Python
         uses: actions/setup-python@v1
         with:
@@ -35,10 +43,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.event.head_commit.message }}
-          release_name: ${{ github.event.head_commit.message }}
+          tag_name: ${{ COMMIT_TITLE }}
+          release_name: ${{ COMMIT_TITLE }}
           body: |
-            Release
+            ${{ COMMIT_DESCRIPTION }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
