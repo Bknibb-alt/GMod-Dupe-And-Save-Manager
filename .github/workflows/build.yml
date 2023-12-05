@@ -46,10 +46,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ COMMIT_TITLE }}
-          release_name: ${{ COMMIT_TITLE }}
-          body: |
-            ${{ COMMIT_DESCRIPTION }}
+          tag_name: ${{ env.COMMIT_TITLE }}
+          release_name: ${{ env.COMMIT_TITLE }}
+          body: ${{ env.COMMIT_DESCRIPTION }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
