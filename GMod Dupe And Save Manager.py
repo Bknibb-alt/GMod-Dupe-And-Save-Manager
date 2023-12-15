@@ -40,7 +40,7 @@ def get_games():
             appmanifestpath = os.path.join(appspath, f"appmanifest_{appid}.acf")
             appmanifest_vdf = PyVDF(infile=appmanifestpath)
             appmanifest = appmanifest_vdf.getData()
-            if appmanifest == {}:
+            if len(appmanifest) == 0:
                 continue
             appname = appmanifest["AppState"]["name"]
             if appname == "Steamworks Common Redistributables":
