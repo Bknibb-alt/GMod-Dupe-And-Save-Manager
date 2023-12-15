@@ -40,6 +40,8 @@ def get_games():
             appmanifestpath = os.path.join(appspath, f"appmanifest_{appid}.acf")
             appmanifest_vdf = PyVDF(infile=appmanifestpath)
             appmanifest = appmanifest_vdf.getData()
+            if appmanifest == {}:
+                continue
             appname = appmanifest["AppState"]["name"]
             if appname == "Steamworks Common Redistributables":
                 continue
@@ -275,9 +277,10 @@ class save(ttk.Frame):
         else:
             return
         refresh()
-class renamer(tk.Tk):
+class renamer(tk.Toplevel):
     def __init__(self, object_):
-        super().__init__()
+        super().__init__(root)
+        self.grab_set()
         self.object = object_
         self.title("Rename Dupe/Save")
         self.name_var = tk.StringVar(master=self, value=self.object.name)
