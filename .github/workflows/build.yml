@@ -25,10 +25,10 @@ jobs:
           echo "Commit Description: $COMMIT_DESCRIPTION"
       - name: Check Commit Title
         run: |
-          if echo "${COMMIT_TITLE}" | grep -q "*NOBUILD*"; then
+          if ("${COMMIT_TITLE}".Contains("*NOBUILD*")) {
             echo "Commit title contains *NOBUILD*. Cancelling workflow."
             exit 78  # You can choose a different exit code if needed
-          fi
+          }
       - name: Install Python
         uses: actions/setup-python@v1
         with:
