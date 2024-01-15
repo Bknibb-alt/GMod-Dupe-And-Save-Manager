@@ -24,7 +24,9 @@ jobs:
           echo "Commit Title: $COMMIT_TITLE"
           echo "Commit Description: $COMMIT_DESCRIPTION"
       - name: Check Commit Title
+        shell: pwsh
         run: |
+          echo $COMMIT_TITLE
           if ("${COMMIT_TITLE}".Contains("*NOBUILD*")) {
             echo "Commit title contains *NOBUILD*. Cancelling workflow."
             exit 78  # You can choose a different exit code if needed
