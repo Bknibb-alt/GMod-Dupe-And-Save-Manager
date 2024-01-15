@@ -24,13 +24,12 @@ jobs:
           echo "Commit Title: $COMMIT_TITLE"
           echo "Commit Description: $COMMIT_DESCRIPTION"
       - name: Check Commit Title
-        shell: pwsh
+        shell: bash
         run: |
-          $ErrorActionPreference = 'stop'
-          if ("${COMMIT_TITLE}".Contains("*NOBUILD*")) {
+          if echo "${COMMIT_TITLE}" | grep -q "*NOBUILD*"; then
             echo "Commit title contains *NOBUILD*. Cancelling workflow."
-            error  # You can choose a different exit code if needed
-          }
+            exit 78  # You can choose a different exit code if needed
+          fi
       - name: Install Python
         uses: actions/setup-python@v1
         with:
